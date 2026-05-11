@@ -1,0 +1,11 @@
+[network_colors]
+roads = "red"
+bike_ped = "green"
+
+[network_weight]
+roads = 5
+bike_ped = 2
+
+
+
+
