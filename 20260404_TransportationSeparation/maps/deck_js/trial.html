@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delft Satellite Map</title>
+
+    <!-- 1. Include deck.gl Core & Widgets Bundles -->
+    <script src="https://unpkg.com/deck.gl@^9.0.0/dist.min.js"></script>
+    <script src="https://unpkg.com/@deck.gl/widgets@^9.0.0/dist.min.js"></script>
+    
+    <!-- 2. Include Native Widget Stylesheets -->
+    <link href="https://unpkg.com/@deck.gl/widgets@^9.0.0/dist/stylesheet.css" rel="stylesheet" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+        #container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container"></div>
+
+    <script>
+        // Destructure native classes from the global window objects exposed by the CDNs
+        const { Deck } = deck;
+        const { ZoomWidget, ResetViewWidget } = deckWidgets;
+
+        // 3. Define the baseline view layout boundary
+        const initialViewState = {
+            latitude: 51.98905,
+            longitude: 4.35883,
+            zoom: 18,
+            pitch: 0,
+            bearing: 0
+        };
+
+        // 4. Construct the custom Esri map style schema natively
+        const esriSatelliteStyle = {
+            version: 8,
+            sources: {
+                "esri-satellite": {
+                    type: "raster",
+                    tiles: [
+                        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                    ],
+                    tileSize: 256,
+                    attribution: "Esri, Maxar, Earthstar Geographics, and the GIS User Community"
+                }
+            },
+            layers: [
+                {
+                    id: "esri-satellite-layer",
+                    type: "raster",
+                    source: "esri-satellite",
+                    minzoom: 0,
+                    maxzoom: 22
+                }
+            ]
+        };
+
+        // 5. Initialize the interactive Deck engine
+        const map = new Deck({
+            canvas: 'deckgl-overlay',
+            parent: document.getElementById('container'),
+            initialViewState: initialViewState,
+            controller: true,
+            mapStyle: esriSatelliteStyle,
+            
+            // Define any vector data overlays here
+            layers: [], 
+
+            // 6. Instantiate the UI components natively with JavaScript classes
+            widgets: [
+                new ZoomWidget({ 
+                    placement: "top-right" 
+                }),
+                new ResetViewWidget({ 
+                    placement: "top-right", 
+                    label: "Reset View",
+                    initialViewState: initialViewState // Passes smoothly now!
+                })
+            ]
+        });
+    </script>
+</body>
+</html>
