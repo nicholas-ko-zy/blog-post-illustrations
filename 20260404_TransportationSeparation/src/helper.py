@@ -26,15 +26,19 @@ def add_attribution(file_path):
         position: absolute; 
         bottom: 0; 
         right: 0; 
-        background: rgba(255, 255, 255, 0.8); 
-        padding: 4px 8px; 
+        background: rgba(255, 255, 255, 0.85); 
+        padding: clamp(2px, 0.6vw, 4px) clamp(4px, 1vw, 8px); 
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-        font-size: 11px; 
+        font-size: clamp(8px, 1vw, 11px); 
         color: #333; 
         z-index: 99999;
         border-top-left-radius: 4px;
         box-shadow: 0 0 4px rgba(0,0,0,0.15);
         pointer-events: auto;
+        white-space: normal;
+        word-break: break-word;
+        max-width: 95vw;
+        text-align: right;
     ">
         Esri, Maxar, Earthstar Geographics, and the GIS User Community
     </div>
@@ -81,35 +85,35 @@ def upgrade_widget_in_html(file_path):
 
 def add_network_legend(file_path):
     LEGEND_HTML = """
-    <!-- Floating Network Legend Layer -->
+    <!-- Floating Responsive Network Legend Layer -->
     <div style="
         position: absolute;
-        bottom: 30px;
-        right: 20px;
+        bottom: clamp(28px, 5vw, 42px); /* Pushes legend above the ~22px tall attribution bar */
+        right: clamp(8px, 2vw, 16px);
         background-color: rgba(255, 255, 255, 0.95);
-        padding: 12px 16px;
+        padding: clamp(6px, 1.5vw, 12px) clamp(8px, 2vw, 16px);
         border-radius: 6px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        font-size: 13px;
+        font-size: clamp(10px, 1.2vw, 13px);
         color: #333;
         z-index: 99999;
         pointer-events: auto;
-        min-width: 150px;
+        width: clamp(100px, 20vw, 160px);
     ">
-        <div style="font-weight: bold; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 4px;">
+        <div style="font-weight: bold; margin-bottom: clamp(4px, 1vw, 8px); border-bottom: 1px solid #eee; padding-bottom: clamp(2px, 0.5vw, 4px);">
             Network Layers
         </div>
         
         <!-- Red Line Item -->
-        <div style="display: flex; align-items: center; margin-bottom: 6px;">
-            <div style="width: 24px; height: 4px; background-color: #FF0000; margin-right: 10px; border-radius: 2px;"></div>
+        <div style="display: flex; align-items: center; margin-bottom: clamp(3px, 0.8vw, 6px);">
+            <div style="width: clamp(14px, 2.5vw, 24px); height: clamp(2px, 0.4vw, 4px); background-color: #FF0000; margin-right: clamp(6px, 1vw, 10px); border-radius: 2px; flex-shrink: 0;"></div>
             <span>Roads</span>
         </div>
         
         <!-- Green Line Item -->
         <div style="display: flex; align-items: center;">
-            <div style="width: 24px; height: 4px; background-color: #00FF00; margin-right: 10px; border-radius: 2px;"></div>
+            <div style="width: clamp(14px, 2.5vw, 24px); height: clamp(2px, 0.4vw, 4px); background-color: #00FF00; margin-right: clamp(6px, 1vw, 10px); border-radius: 2px; flex-shrink: 0;"></div>
             <span>Pedestrian/Bike Paths</span>
         </div>
     </div>
